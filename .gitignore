@@ -1,0 +1,5 @@
+/.newsbeuter/cache.db
+/.newsbeuter/history.cmdline
+/.newsbeuter/history.search
+/.newsbeuter/pb-lock.pid
+/.newsbeuter/queue

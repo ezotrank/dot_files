@@ -1,0 +1,4 @@
+auto-reload yes
+browser chromium
+refresh-on-startup yes
+reload-time 10

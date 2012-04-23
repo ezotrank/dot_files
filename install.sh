@@ -9,7 +9,7 @@ git submodule update
 echo "Start create links"
 ln -snf $REPO_DIR/.zshrc ~/.zshrc
 ln -snf $REPO_DIR/.zsh ~/.zsh
-ln -snf $REPO_DIR/.tmux ~/.tmux
+ln -snf $REPO_DIR/.tmux.conf ~/.tmux.conf
 ln -snf $REPO_DIR/.screenrc ~/.screenrc
 ln -snf $REPO_DIR/.newsbeuter ~/.newsbeuter
 

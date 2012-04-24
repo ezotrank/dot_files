@@ -1,20 +1,22 @@
 autoload -U compinit promptinit
 compinit
-promptinit; prompt gentoo
+
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle -e ':completion::*:*:*:hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 setopt correctall
 
+# Plugin
+PLUGINS=(git)
+PLUGIN_DIR=~/.zsh/ext
+for plugin in $PLUGINS; do
+    source $PLUGIN_DIR/$plugin.zsh
+done
+
 source ~/.zsh/ext/git-prompt/zshrc.sh
 export __GIT_PROMPT_DIR=$HOME/.zsh/ext/git-prompt
-prompt_gentoo_user=${2:-'green'}
-prompt_gentoo_prompt=${1:-'blue'}
-base_prompt="%B%F{$prompt_gentoo_user}%n@%m%k "
-post_prompt="%b%f%k"
-path_prompt="%B%F{$prompt_gentoo_prompt}%1~"
-PROMPT='$base_prompt$path_prompt $(git_super_status)%# $post_prompt'
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) %b$(git_super_status)%# '
 
 # RVM as user
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -46,12 +48,7 @@ alias ls="ls -h --color=auto"
 alias L="less"
 alias psg="ps aux | egrep -i --color"	
 
-# User ext scripts
-PLUGINS=(rvm git)
-PLUGIN_DIR=~/.zsh/ext
-for plugin in $PLUGINS; do
-    source $PLUGIN_DIR/$plugin.zsh
-done
+
 
 setopt hist_ignore_all_dups
 setopt autocd

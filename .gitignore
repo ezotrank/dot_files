@@ -3,3 +3,4 @@
 /.newsbeuter/history.search
 /.newsbeuter/pb-lock.pid
 /.newsbeuter/queue
+/.newsbeuter/cache.db.lock

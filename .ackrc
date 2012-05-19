@@ -1,0 +1,24 @@
+--ignore-case
+
+--type-set
+js=.js
+
+# CoffeeScript
+--type-set
+coffee=.coffee
+
+# Both Javascript and CoffeeScript
+--type-set
+scripts=.js,.coffee
+
+# CSS
+--type-set
+css=.css
+
+# Sass, both syntaxes
+--type-set
+sass=.scss,.sass
+
+# Haml
+--type-set
+haml=.haml

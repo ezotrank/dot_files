@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Source directory
 REPO_DIR=`pwd`
 
 echo "Submodule init and update"

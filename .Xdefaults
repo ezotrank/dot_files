@@ -6,10 +6,10 @@ Xft.hinting:    true
 Xft.autohint:  true
 Xft.hintstyle:  hintfull
 
-URxvt.font: xft:Droid Sans Mono Slashed:pixelsize=14:Regular
-URxvt.boldFont: xft:Droid Sans Mono Slashed:pixelsize=14:Bold
-URxvt.talicFont: xft:Droid Sans Mono Slashed:pixelsize=14:Italic
-URxvt.bolditalicFont: xft:Droid Sans Mono Slashed:pixelsize=14:Bold:Italic
+URxvt.font: xft:Monospace:pixelsize=14:Regular
+URxvt.boldFont: xft:Monospace:pixelsize=14:Bold
+URxvt.talicFont: xft:Monospace:pixelsize=14:Italic
+URxvt.bolditalicFont: xft:Monospace:pixelsize=14:Bold:Italic
 
 urxvt.xftAutoHint: true
 urxvt.realBold: True

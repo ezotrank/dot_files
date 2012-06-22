@@ -47,8 +47,9 @@ eval `dircolors`
 alias c='clear'
 alias ls="ls -h --color=auto"
 alias L="less"
-alias psg="ps aux | egrep -i --color"	
-
+alias psg="ps aux | egrep -i --color"
+alias cpwd="pwd|xclip -i"
+alias ppwd="xclip -o"
 
 
 setopt hist_ignore_all_dups

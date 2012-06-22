@@ -19,14 +19,12 @@ local scount = screen.count()
 beautiful.init(home .. "/.config/awesome/themes/zenburn/zenburn.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 local r = require("runonce")
-
-r.run("urxvtd -q -o -f")
 r.run("syndaemon -i 0.5 -t -d")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.

@@ -14,6 +14,12 @@ local exec   = awful.util.spawn
 local sexec  = awful.util.spawn_with_shell
 local scount = screen.count()
 
+if scount == 2 then
+   main_monitor = 2
+else
+   main_monitor = 1
+end
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 beautiful.init(home .. "/.config/awesome/themes/zenburn/zenburn.lua")
@@ -26,6 +32,8 @@ modkey = "Mod4"
 
 local r = require("runonce")
 r.run("syndaemon -i 0.5 -t -d")
+r.run("mount ~/.yandex/disk")
+r.run("if [[ -z $(pidof gnome-screensaver) ]]; then gnome-screensaver; fi")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
@@ -45,19 +53,14 @@ layouts =
 }
 
 tags = {}
-for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-    -- tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
-    tags[s] = awful.tag({ 
-                         "1 Chrome Dev", "2 Chrome", "3 Tmux", 
-                         "4 Im", "5 Evolution", 6, 
-                         7, "8 DevSceen", "9 Emacs" }, s,
-                         {layouts[3], layouts[3], layouts[4], -- Tags: 1, 2, 3
-                         layouts[4], layouts[4], layouts[4], --       4, 5 ,6
-                         layouts[4], layouts[4], layouts[4]  --       7, 8, 9
-    })
-end
+main_monitor_tags = {"1 Chorme Dev", "2 Chrome", "3 Tmux", "4 Im", "5 Evolution", "6", "7", "8 DevSceen", "9 Emacs"}
 
+if scount == 2 then
+   tags[1] = awful.tag({1, 2}, 1, layouts[3])
+   tags[2] = awful.tag(main_monitor_tags, 2, layouts[3])
+else
+   tags[1] = awful.tag(main_monitor_tags, 1, layouts[3])
+end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -214,46 +217,105 @@ taglist.buttons = awful.util.table.join(
     awful.button({ },        5, awful.tag.viewprev
 ))
 
-for s = 1, scount do
-    -- Create a promptbox
-    promptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
-    -- Create a layoutbox
-    layoutbox[s] = awful.widget.layoutbox(s)
-    layoutbox[s]:buttons(awful.util.table.join(
-        awful.button({ }, 1, function () awful.layout.inc(layouts,  1) end),
-        awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-        awful.button({ }, 4, function () awful.layout.ipnc(layouts,  1) end),
-        awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
-    ))
+-- OPTIMIZE: bbrr..ugly
+if scount == 2 then
+   promptbox[1] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+   -- Create a layoutbox
+   layoutbox[1] = awful.widget.layoutbox(1)
+   layoutbox[1]:buttons(awful.util.table.join(
+			   awful.button({ }, 1, function () awful.layout.inc(layouts,  1) end),
+			   awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+			   awful.button({ }, 4, function () awful.layout.ipnc(layouts,  1) end),
+			   awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
+					     ))
 
-    -- Create the taglist
-    taglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, taglist.buttons)
-    -- Create the wibox
-    wibox[s] = awful.wibox({      screen = s,
-        fg = beautiful.fg_normal, height = 12,
-        bg = beautiful.bg_normal, position = "top",
-        border_color = beautiful.border_focus,
-        border_width = beautiful.border_width
-    })
-    -- Add widgets to the wibox
-    wibox[s].widgets = {
-        {   taglist[s], layoutbox[s], separator, promptbox[s],
-            ["layout"] = awful.widget.layout.horizontal.leftright
-        },
-        s == 1 and systray or nil,
-        separator, datewidget, dateicon,
-        separator, volwidget, volbar.widget, volicon,
-        separator, upicon, netwidget, dnicon, wifiicon,
-	separator, upicon, eth_net, dnicon,
-        separator, fs.r.widget, fs.b.widget, fsicon,
-        separator, membar.widget, memicon,
-        separator, batwidget, baticon,
-        separator, tzswidget, cpugraph.widget, cpuicon,
-	separator, ["layout"] = awful.widget.layout.horizontal.rightleft
-    }
+   -- Create the taglist
+   taglist[1] = awful.widget.taglist(1, awful.widget.taglist.label.all, taglist.buttons)
+   -- Create the wibox
+   wibox[1] = awful.wibox({      screen = 1,
+				 fg = beautiful.fg_normal, height = 12,
+				 bg = beautiful.bg_normal, position = "top",
+				 border_color = beautiful.border_focus,
+				 border_width = beautiful.border_width
+			  })
+   -- Add widgets to the wibox
+   wibox[1].widgets = {
+      {   taglist[1], layoutbox[1], separator, promptbox[1],
+	  ["layout"] = awful.widget.layout.horizontal.leftright
+      }, separator, ["layout"] = awful.widget.layout.horizontal.rightleft }
+
+   -- SCREEN 2
+   promptbox[2] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+   -- Create a layoutbox
+   layoutbox[2] = awful.widget.layoutbox(2)
+   layoutbox[2]:buttons(awful.util.table.join(
+			   awful.button({ }, 1, function () awful.layout.inc(layouts,  1) end),
+			   awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+			   awful.button({ }, 4, function () awful.layout.ipnc(layouts,  1) end),
+			   awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
+					     ))
+
+   -- Create the taglist
+   taglist[2] = awful.widget.taglist(2, awful.widget.taglist.label.all, taglist.buttons)
+   -- Create the wibox
+   wibox[2] = awful.wibox({      screen = 2,
+				 fg = beautiful.fg_normal, height = 12,
+				 bg = beautiful.bg_normal, position = "top",
+				 border_color = beautiful.border_focus,
+				 border_width = beautiful.border_width
+			  })
+   -- Add widgets to the wibox
+   wibox[2].widgets = {
+      {   taglist[2], layoutbox[2], separator, promptbox[2],
+	  ["layout"] = awful.widget.layout.horizontal.leftright
+      },
+      systray,
+      separator, datewidget, dateicon,
+      separator, volwidget, volbar.widget, volicon,
+      separator, upicon, netwidget, dnicon, wifiicon,
+      separator, upicon, eth_net, dnicon,
+      separator, fs.r.widget, fs.b.widget, fsicon,
+      separator, membar.widget, memicon,
+      separator, batwidget, baticon,
+      separator, tzswidget, cpugraph.widget, cpuicon,
+      separator, ["layout"] = awful.widget.layout.horizontal.rightleft }
+else
+   promptbox[1] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+   -- Create a layoutbox
+   layoutbox[1] = awful.widget.layoutbox(1)
+   layoutbox[1]:buttons(awful.util.table.join(
+			   awful.button({ }, 1, function () awful.layout.inc(layouts,  1) end),
+			   awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+			   awful.button({ }, 4, function () awful.layout.ipnc(layouts,  1) end),
+			   awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
+					     ))
+
+   -- Create the taglist
+   taglist[1] = awful.widget.taglist(1, awful.widget.taglist.label.all, taglist.buttons)
+   -- Create the wibox
+   wibox[1] = awful.wibox({      screen = 1,
+				 fg = beautiful.fg_normal, height = 12,
+				 bg = beautiful.bg_normal, position = "top",
+				 border_color = beautiful.border_focus,
+				 border_width = beautiful.border_width
+			  })
+   -- Add widgets to the wibox
+   wibox[1].widgets = {
+      {   taglist[1], layoutbox[1], separator, promptbox[1],
+	  ["layout"] = awful.widget.layout.horizontal.leftright
+      },
+      systray,
+      separator, datewidget, dateicon,
+      separator, volwidget, volbar.widget, volicon,
+      separator, upicon, netwidget, dnicon, wifiicon,
+      separator, upicon, eth_net, dnicon,
+      separator, fs.r.widget, fs.b.widget, fsicon,
+      separator, membar.widget, memicon,
+      separator, batwidget, baticon,
+      separator, tzswidget, cpugraph.widget, cpuicon,
+      separator, ["layout"] = awful.widget.layout.horizontal.rightleft }
+
 end
--- }}}
--- }}}
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
@@ -295,7 +357,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Ezo keybinds
-    awful.key({ modkey, "Control" }, "F12", function () awful.util.spawn("gnome-screensaver-command --lock") end),
+    awful.key({ modkey }, "l", function () awful.util.spawn("gnome-screensaver-command --lock") end),
     awful.key({ }, "XF86HomePage", function () awful.util.spawn("chromium-browser http://encrypted.google.com") end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 2-") end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 2+") end),
@@ -339,7 +401,8 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    -- awful.key({ modkey, "Control" }, "o",      function(c) awful.client.movetoscreen(c,c.screen-1) end ),
+    -- awful.key({ modkey, "Control" }, "p",      function(c) awful.client.movetoscreen(c,c.screen+1) end ),
     awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
     awful.key({ modkey,           }, "n",
@@ -425,22 +488,25 @@ awful.rules.rules = {
     --   properties = { floating = true } },
     -- { rule = { class = "gimp" },
     --   properties = { floating = true } },
+
+    
     { rule = { class = "Evolution" },
-      properties = { tag = tags[1][5] } },
+      properties = { tag = tags[main_monitor][5] } },
+    
     { rule = { name = "EmacsDev", class = "Emacs" }, 
-      properties = { tag = tags[1][9], maximized_vertical = true, maximized_horizontal = true } },
+      properties = { tag = tags[main_monitor][9], maximized_vertical = true, maximized_horizontal = true } },
+
     { rule = { instance = "EmacsDevScreen", class = "URxvt" }, 
-      properties = { tag = tags[1][8] } },
-    { rule = { instance = "Work", class = "URxvt" }, 
-      properties = { tag = tags[1][3] } },
+      properties = { tag = tags[main_monitor][8] } },
+    
     { rule = { class = "Firefox" }, 
-      properties = { tag = tags[1][1] } },
-    -- { rule = { class = "Chromium-browser" }, 
-      -- properties = { tag = tags[1][2] } },
+      properties = { tag = tags[main_monitor][1] } },
+
     { rule = { class = "Skype" }, 
-      properties = { tag = tags[1][4] } },
+      properties = { tag = tags[main_monitor][4] } },
+
     { rule = { class = "Pidgin" }, 
-      properties = { tag = tags[1][4] } },
+      properties = { tag = tags[main_monitor][4] } },
 }
 -- }}}
 

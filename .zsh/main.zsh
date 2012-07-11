@@ -50,6 +50,8 @@ alias L="less"
 alias psg="ps aux | egrep -i --color"
 alias cpwd="pwd|xclip -i"
 alias ppwd="xclip -o"
+alias tmux="TERM=xterm-256color tmux"
+alias tmuxa="tmux attach || tmux new"
 
 
 setopt hist_ignore_all_dups

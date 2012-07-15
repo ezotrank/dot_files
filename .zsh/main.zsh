@@ -29,7 +29,6 @@ export HISTFILE="$HOME/.history"
 
 export BROWSER="/usr/bin/chromium"
 export LAUNCHY_BROWSER="/usr/bin/chromium"
-export TERM="rxvt-unicode"
 
 # ruby and rails falcon path http://goo.gl/RLIvi
 export RUBY_HEAP_MIN_SLOTS=1000000

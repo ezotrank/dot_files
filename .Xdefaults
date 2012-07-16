@@ -50,6 +50,7 @@ URxvt.color15 : #FFFFFF
 URxvt.matcher.button  : 1
 URxvt.perl-ext-common : default,matcher
 URxvt.urlLauncher     : chromium-browser
+URxvt.termName: rxvt
 
 *XTerm*background: black
 *XTerm*foreground: gray

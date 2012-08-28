@@ -14,6 +14,7 @@ ln -snf $REPO_DIR/.tmux.conf ~/.tmux.conf
 ln -snf $REPO_DIR/.screenrc ~/.screenrc
 ln -snf $REPO_DIR/.newsbeuter ~/.newsbeuter
 ln -snf $REPO_DIR/.Xdefaults ~/.Xdefaults
+ln -snf $REPO_DIR/.xcolors ~/.xcolors
 
 if ! [[ -d ~/.config ]]; then mkdir ~/.config; fi
 ln -snf $REPO_DIR/.config/awesome ~/.config/awesome

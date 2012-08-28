@@ -23,12 +23,13 @@ PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1
 unset RUBYOPT
 
 # Exports
-export HISTSIZE=2000
-export SAVEHIST=1000
+export HISTSIZE=20000
+export SAVEHIST=20000
 export HISTFILE="$HOME/.history"
 
 export BROWSER="/usr/bin/chromium"
 export LAUNCHY_BROWSER="/usr/bin/chromium"
+export EDITOR="editor"
 
 # ruby and rails falcon path http://goo.gl/RLIvi
 export RUBY_HEAP_MIN_SLOTS=1000000
@@ -45,13 +46,27 @@ export LESSOPEN="|code2color %s"
 eval `dircolors`
 alias c='clear'
 alias ls="ls -h --color=auto"
-alias L="less"
+alias L="less -N"
 alias psg="ps aux | egrep -i --color"
 alias cpwd="pwd|xclip -i"
 alias ppwd="xclip -o"
 alias tmux="TERM=xterm-256color tmux"
 alias tmuxa="tmux attach || tmux new"
 
+# Git aliases
+alias ga='git add'
+alias gp='git push'
+alias gl='git log'
+alias gs='git status'
+alias gd='git diff'
+alias gm='git commit -m'
+alias gma='git commit -am'
+alias gb='git branch'
+alias gc='git checkout'
+alias gra='git remote add'
+alias grr='git remote rm'
+alias gpu='git pull'
+alias gcl='git clone'
 
 setopt hist_ignore_all_dups
 setopt autocd

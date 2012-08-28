@@ -357,7 +357,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Ezo keybinds
-    awful.key({ modkey }, "l", function () awful.util.spawn("gnome-screensaver-command --lock") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("gnome-screensaver-command --lock") end),
     awful.key({ }, "XF86HomePage", function () awful.util.spawn("chromium-browser http://encrypted.google.com") end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 2-") end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 2+") end),

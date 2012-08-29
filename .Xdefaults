@@ -19,7 +19,7 @@ URxvt.externalBorder: 0
 URxvt.saveLines: 10000
 URxvt.cursorBlink: true
 
-#include "/home/ezo/.xcolors/solarized_light"
+#include "/home/ezo/.xcolors/tango"
 URxvt*depth:32
 URxvt*dynamicColors:on
 

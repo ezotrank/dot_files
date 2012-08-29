@@ -8,13 +8,9 @@ git submodule init
 git submodule update
 
 echo "Start create links"
-ln -snf $REPO_DIR/.zshrc ~/.zshrc
-ln -snf $REPO_DIR/.zsh ~/.zsh
-ln -snf $REPO_DIR/.tmux.conf ~/.tmux.conf
-ln -snf $REPO_DIR/.screenrc ~/.screenrc
-ln -snf $REPO_DIR/.newsbeuter ~/.newsbeuter
-ln -snf $REPO_DIR/.Xdefaults ~/.Xdefaults
-ln -snf $REPO_DIR/.xcolors ~/.xcolors
+for file in ".zshrc" ".zsh" ".tmux.conf" ".screenrc" ".newsbeuter" ".Xdefaults" ".xcolors"; do
+    ln -snf $REPO_DIR/$file $HOME/$file
+done
 
 if ! [[ -d ~/.config ]]; then mkdir ~/.config; fi
 ln -snf $REPO_DIR/.config/awesome ~/.config/awesome

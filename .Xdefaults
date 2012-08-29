@@ -18,10 +18,12 @@ URxvt.internalBorder: 3
 URxvt.externalBorder: 0
 URxvt.saveLines: 10000
 URxvt.cursorBlink: true
-
-#include "/home/ezo/.xcolors/tango"
 URxvt*depth:32
 URxvt*dynamicColors:on
+URxvt.termName: rxvt
+
+#include "/home/ezo/.xcolors/tango"
+
 
 *XTerm*background: black
 *XTerm*foreground: gray

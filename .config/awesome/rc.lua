@@ -7,7 +7,34 @@ require("beautiful")
 -- Notification library
 require("naughty")
 -- additional libs
-require("vicious")
+-- require("vicious")
+vicious = require("vicious")
+
+-- {{{ Error handling
+-- Check if awesome encountered an error during startup and fell back to
+-- another config (This code will only ever execute for the fallback config)
+if awesome.startup_errors then
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
+end
+
+-- Handle runtime errors after startup
+do
+    local in_error = false
+    awesome.add_signal("debug::error", function (err)
+        -- Make sure we don't go into an endless error loop
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = err })
+        in_error = false
+    end)
+end
+-- }}}
+
 
 local home   = os.getenv("HOME")
 local exec   = awful.util.spawn
@@ -16,8 +43,10 @@ local scount = screen.count()
 
 if scount == 2 then
    main_monitor = 2
+   second_monitor = 1
 else
    main_monitor = 1
+   second_monitor = 1
 end
 
 -- {{{ Variable definitions
@@ -33,6 +62,7 @@ modkey = "Mod4"
 local r = require("runonce")
 r.run("syndaemon -i 0.5 -t -d")
 r.run("mount ~/.yandex/disk")
+r.run("~/bin/xflux -l 54.7159 -g 20.5084")
 r.run("if [[ -z $(pidof gnome-screensaver) ]]; then gnome-screensaver; fi")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -53,11 +83,11 @@ layouts =
 }
 
 tags = {}
-main_monitor_tags = {"1 Chorme Dev", "2 Chrome", "3 Tmux", "4 Im", "5 Evolution", "6", "7", "8 DevSceen", "9 Emacs"}
+main_monitor_tags = {"1 Chorme Dev", "2 Chrome", "3 Tmux", "4 Im", "5 E-Mail", "6", "7", "8 DevSceen", "9 Emacs"}
 
 if scount == 2 then
-   tags[1] = awful.tag({1, 2}, 1, layouts[3])
-   tags[2] = awful.tag(main_monitor_tags, 2, layouts[3])
+   tags[2] = awful.tag({1, 2, 3}, 1, layouts[3])
+   tags[1] = awful.tag(main_monitor_tags, 2, layouts[3])
 else
    tags[1] = awful.tag(main_monitor_tags, 1, layouts[3])
 end
@@ -242,7 +272,7 @@ if scount == 2 then
    wibox[1].widgets = {
       {   taglist[1], layoutbox[1], separator, promptbox[1],
 	  ["layout"] = awful.widget.layout.horizontal.leftright
-      }, separator, ["layout"] = awful.widget.layout.horizontal.rightleft }
+      }, systray, separator, ["layout"] = awful.widget.layout.horizontal.rightleft }
 
    -- SCREEN 2
    promptbox[2] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
@@ -490,7 +520,7 @@ awful.rules.rules = {
     --   properties = { floating = true } },
 
     
-    { rule = { class = "Evolution" },
+    { rule = { class = "Claws-mail" },
       properties = { tag = tags[main_monitor][5] } },
     
     { rule = { name = "EmacsDev", class = "Emacs" }, 
@@ -503,10 +533,10 @@ awful.rules.rules = {
       properties = { tag = tags[main_monitor][1] } },
 
     { rule = { class = "Skype" }, 
-      properties = { tag = tags[main_monitor][4] } },
+      properties = { tag = tags[second_monitor][4] } },
 
     { rule = { class = "Pidgin" }, 
-      properties = { tag = tags[main_monitor][4] } },
+      properties = { tag = tags[second_monitor][4] } },
 }
 -- }}}
 

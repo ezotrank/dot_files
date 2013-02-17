@@ -16,10 +16,14 @@ done
 
 source ~/.zsh/ext/git-prompt/zshrc.sh
 export __GIT_PROMPT_DIR=$HOME/.zsh/ext/git-prompt
-PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) %b$(git_super_status)%# '
+# Combined left and right prompt configuration.
+local smiley="%(?,%{$fg[green]%}☺%{$reset_color%},%{$fg[red]%}☹%{$reset_color%})"
+
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg[white]%}%{$fg_bold[blue]%}%(!.%~.%1~) ${smiley}%b$(git_super_status)%# '
 
 # RVM as user
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+export PATH="$HOME/.rbenv/bin:$PATH:$HOME/develop/dot_files/bin"
+eval "$(rbenv init -)"
 unset RUBYOPT
 
 # Exports
@@ -31,15 +35,11 @@ export BROWSER="/usr/bin/chromium"
 export LAUNCHY_BROWSER="/usr/bin/chromium"
 export EDITOR="editor"
 
-# ruby and rails falcon path http://goo.gl/RLIvi
-export RUBY_HEAP_MIN_SLOTS=1000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=1000000000
-export RUBY_HEAP_FREE_MIN=500000
+# Ruby hacks
+export RUBY_GC_MALLOC_LIMIT=60000000
+export RUBY_FREE_MIN=200000
 
-
-# Code highlighting in less
+# code highlighting in less
 export LESSOPEN="|code2color %s"
 
 # ---[ Alias Section ]-------------------------------------------------
@@ -67,6 +67,12 @@ alias gra='git remote add'
 alias grr='git remote rm'
 alias gpu='git pull'
 alias gcl='git clone'
+
+#Rails helpers
+alias be='bundle exec'
+alias rails='be rails'
+alias rake='be rake'
+alias cap='be cap'
 
 setopt hist_ignore_all_dups
 setopt autocd

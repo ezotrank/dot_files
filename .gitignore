@@ -4,3 +4,6 @@
 /.newsbeuter/pb-lock.pid
 /.newsbeuter/queue
 /.newsbeuter/cache.db.lock
+/bin/odesk
+/bin/shell-fm
+/bin/xflux

@@ -6,10 +6,10 @@ Xft.hinting:    true
 Xft.autohint:   true
 Xft.hintstyle:  hintfull
 
-URxvt.font: xft:Monospace:pixelsize=14:Regular
-URxvt.boldFont: xft:Monospace:pixelsize=14:Bold
-URxvt.talicFont: xft:Monospace:pixelsize=14:Italic
-URxvt.bolditalicFont: xft:Monospace:pixelsize=14:Bold:Italic
+URxvt.font: xft:Monospace:pixelsize=15:Regular
+URxvt.boldFont: xft:Monospace:pixelsize=15:Bold
+URxvt.talicFont: xft:Monospace:pixelsize=15:Italic
+URxvt.bolditalicFont: xft:Monospace:pixelsize=15:Bold:Italic
 
 URxvt.xftAutoHint: true
 URxvt.realBold: True
@@ -34,4 +34,4 @@ URxvt*colorUL: #86a2be
 *XTerm*foreground: gray
 *XTerm*renderFont: true
 *XTerm*faceName: Droid\ Sans\ Mono
-*XTerm*faceSize: 11
+*XTerm*faceSize: 14

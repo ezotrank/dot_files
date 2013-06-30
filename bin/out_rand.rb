@@ -1,1 +1,0 @@
-/home/ezo/develop/bash_script/out_rand.rb

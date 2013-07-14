@@ -8,6 +8,6 @@ git submodule init
 git submodule update
 
 echo "Start create links"
-for file in ".zshrc" ".zsh" ".ackrc"; do
+for file in ".zshrc" ".zsh" ".ackrc", ".vimrc"; do
     ln -snf $REPO_DIR/$file $HOME/$file
 done

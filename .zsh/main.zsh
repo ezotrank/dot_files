@@ -35,3 +35,5 @@ setopt autocd
 # Ext
 source ~/.zsh/aliases.sh
 source ~/.zsh/functions.sh
+source ~/.zsh/python.sh
+source ~/.zsh/go.sh

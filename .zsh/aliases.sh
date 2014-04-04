@@ -23,5 +23,7 @@ alias rake='be rake'
 alias cap='be cap'
 
 # System
-alias python='python3'
-alias ls='ls -G'
+# alias ls='ls -G'
+
+# Don't autocomplate
+alias node='nocorrect node' 

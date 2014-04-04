@@ -37,3 +37,4 @@ source ~/.zsh/aliases.sh
 source ~/.zsh/functions.sh
 source ~/.zsh/python.sh
 source ~/.zsh/go.sh
+source ~/.zsh/ext/50-ls-colors.zsh
